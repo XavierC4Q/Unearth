@@ -9,11 +9,15 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import thunk from 'redux-thunk'
 
-const store = createStore(
-  reducer,
-  applyMiddleware(thunk),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const configStore = (initialState) => {
+  return createStore(
+    reducer,
+    initialState,
+    applyMiddleware(thunk)
+  )
+}
+
+const store = configStore()
 
 ReactDOM.render(
   <Provider store={store}>

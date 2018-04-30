@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
-import UserContainer from '../containers/usercontainer'
 import './App.css';
+
+import Home from '../containers/homecontainer'
 
 class App extends Component {
 
@@ -9,7 +10,9 @@ class App extends Component {
     return (
       <div>
         <Switch>
-          <Route exact path='/' component={UserContainer} />
+          <Route exact path='/login' component={Home} />
+          <Route exact path='/register' component={Home} />
+          <Route exact path='/' component={Home} />
         </Switch>
       </div>
     );
