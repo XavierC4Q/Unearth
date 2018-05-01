@@ -8,8 +8,7 @@ function logoutUser(req, res, next) {
 }
 
 function getUser(req, res, next) {
-  db
-    .any(
+  db.any(
       `SELECT user_id, username, email, first_name, last_name, user_image
           FROM users
           WHERE user_id=$1`,
@@ -21,6 +20,20 @@ function getUser(req, res, next) {
     .catch(error => {
       res.json(error);
     });
+}
+
+function getSingleUser(req, res, next) {
+  db.any(
+    `SELECT user_id, username, email, first_name, last_name, user_image
+        FROM users
+        WHERE user_id=${req.params.userID}`
+  )
+  .then(data => {
+    res.json(data)
+  })
+  .catch(error => {
+    res.json(error)
+  })
 }
 
 function getAllUsers(req, res, next) {
@@ -39,5 +52,6 @@ function getAllUsers(req, res, next) {
 module.exports = {
   logoutUser,
   getUser,
+  getSingleUser,
   getAllUsers
 }

@@ -1,10 +1,16 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const LandingPage = ({ state }) => {
-  console.log(state)
+
   return(
     <div>
-      <h1>HOME HOMIE</h1>
+      <nav>
+        {state.loggedIn ? <p>logged in already</p> : <Link to='/login'>Login</Link>}
+        {" "}
+        {state.loggedIn ? <p>why register now</p> : <Link to='/register'>Signup</Link>}
+      </nav>
+      <h1>Welcome to Unearth</h1>
     </div>
   )
 }

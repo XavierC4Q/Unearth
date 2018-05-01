@@ -3,9 +3,6 @@ import { Redirect } from 'react-router'
 
 const Login = ({ state, usernameInput, passwordInput, login }) => {
 
-  if(state.loginSuccess){
-    return ( <Redirect to='/' /> )
-  }
   return(
     <div>
       <form onSubmit={() => login(state.username, state.password)}>

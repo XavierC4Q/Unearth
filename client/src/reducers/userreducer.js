@@ -16,10 +16,12 @@ export function loadingUser(state = false, action){
   }
 }
 
-export function loadedUser(state = [], action){
+export function loadedUser(state = { user: [], success: false }, action){
   switch (action.type){
     case "LOADED_USER":
-      return action.user
+      state.user = action.user
+      state.success = true
+      return state
     default:
       return state
   }

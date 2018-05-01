@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import './App.css';
 
 import Home from '../containers/homecontainer'
+import Profile from '../containers/profilecontainer'
 
 class App extends Component {
 
@@ -13,6 +14,7 @@ class App extends Component {
           <Route exact path='/login' component={Home} />
           <Route exact path='/register' component={Home} />
           <Route exact path='/' component={Home} />
+          <Route exact path='/unearth/profile/:userID' component={Profile} />
         </Switch>
       </div>
     );

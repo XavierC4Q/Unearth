@@ -19,12 +19,25 @@ class Home extends React.Component{
   }
 
   renderLogin = () => {
+    let isLoggedIn = this.props.userState.loggedIn
+    if(isLoggedIn){
+      return ( <Redirect to='/' />)
+    }
     return(
-      <Login state={this.props.loginState} login={this.props.dispatch.login} usernameInput={this.props.dispatch.usernameInput} passwordInput={this.props.dispatch.passwordInput} />
+      <Login
+        state={this.props.loginState}
+        login={this.props.dispatch.login}
+        usernameInput={this.props.dispatch.usernameInput}
+        passwordInput={this.props.dispatch.passwordInput}
+        />
     )
   }
 
   renderRegister = () => {
+    let isLoggedIn = this.props.userState.loggedIn
+    if(isLoggedIn){
+      return ( <Redirect to='/' />)
+    }
     return(
       <Register
         state={this.props.registerState}
@@ -40,7 +53,6 @@ class Home extends React.Component{
   }
 
   render(){
-    console.log('user state',this.props.userState)
     return(
       <div>
         <Switch>
@@ -54,12 +66,13 @@ class Home extends React.Component{
 }
 
 const mapStateToProps = (state) => {
+  console.log('home home',state.loadedUser)
     return {
       loginState: state.loginState,
       userState: {
         allusers: state.loadedAllUsers,
-        loggedInUser: state.loadedUser,
-        loggedIn: !state.failGetUser,
+        loggedInUser: state.loadedUser.user,
+        loggedIn: state.loadedUser.success,
         failAllUsers: state.failAllUsers,
         loadingUser: state.loadingUser,
         loadingAllUsers: state.loadingAllUsers

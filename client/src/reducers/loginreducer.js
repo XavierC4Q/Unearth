@@ -1,7 +1,6 @@
 const defaultState = {
   username: '',
-  password: '',
-  loginSuccess: false
+  password: ''
 }
 
 export default (state = defaultState, action) => {
@@ -19,13 +18,11 @@ export default (state = defaultState, action) => {
     case "SUCCESS":
       newState.username = ''
       newState.password = ''
-      newState.loginSuccess = true
       return newState
 
     case "ERROR":
       newState.username = ''
       newState.password = ''
-      newState.loginSuccess = false
       return newState
 
     default:

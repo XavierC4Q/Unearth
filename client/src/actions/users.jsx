@@ -45,7 +45,7 @@ export function allUsersLoaded(allusers){
   }
 }
 
-/*------------------------------------------User GET Request------------------------------------------*/
+/*--------------------------------------------------AXIOS Request-----------------------------------------------------*/
 export function loadUser(url){
   return (dispatch) => {
     dispatch(loadingUser(true))
@@ -75,4 +75,3 @@ export function loadAllUsers(url){
     })
   }
 }
-/*------------------------------------------User POST Request------------------------------------------*/
