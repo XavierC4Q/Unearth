@@ -11,7 +11,7 @@ class UserProfile extends React.Component{
 
   render(){
     let isOwnProfile = false
-    
+
     if(this.props.state[0]){
       if(this.props.loggedInUser[0]){
         isOwnProfile = this.props.loggedInUser[0].user_id === Number(this.props.userID.userID)

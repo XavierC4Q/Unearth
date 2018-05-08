@@ -6,6 +6,7 @@ import { Redirect } from 'react-router'
 import { loadUser, loadAllUsers } from './../actions/users'
 import { login, usernameInput, passwordInput } from './../actions/login'
 import { register, registerUsername, registerPassword, confirmPassword, registerEmail, registerFirstName, registerLastName } from './../actions/register'
+import { loadCoords } from './../actions/location'
 
 import LandingPage from '../components/LandingPage/LandingPage'
 import Login from '../components/Auth/Login'
@@ -13,9 +14,26 @@ import Register from '../components/Auth/Register'
 
 
 class Home extends React.Component{
+
   componentDidMount(){
     this.props.dispatch.loadUser('/get/loggedInUser')
     this.props.dispatch.loadAllUsers('/get/allusers')
+  }
+
+  componentWillUpdate(nextProps){
+    if(nextProps.userState.loggedInUser[0]){
+      nextProps.dispatch.loadCoords(nextProps.userState.loggedInUser[0].user_id, nextProps.userState.allusers)
+    }
+  }
+
+  onLoad = () => {
+      const onPosition = (position) => {
+
+      }
+      const onError = (error) => {
+        console.log(error)
+      }
+        navigator.geolocation.getCurrentPosition(onPosition, onError, {timeout:5000000000000})
   }
 
   renderLogin = () => {
@@ -53,6 +71,7 @@ class Home extends React.Component{
   }
 
   render(){
+    console.log(this.props)
     return(
       <div>
         <Switch>
@@ -66,7 +85,6 @@ class Home extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-  console.log('home home',state.loadedUser)
     return {
       loginState: state.loginState,
       userState: {
@@ -77,7 +95,9 @@ const mapStateToProps = (state) => {
         loadingUser: state.loadingUser,
         loadingAllUsers: state.loadingAllUsers
       },
-      registerState: state.registerState
+      registerState: state.registerState,
+      userCoords: state.getUserCoords,
+      nearbyUsers: state.getNearbyUsers
     }
 };
 
@@ -95,7 +115,8 @@ const mapDispatchToProps = (dispatch) => {
         registerFirstName: (event) => { dispatch(registerFirstName(event.target.value)) },
         registerLastName: (event) => { dispatch(registerLastName(event.target.value)) },
         confirmPassword: (event) => { dispatch(confirmPassword(event.target.value)) },
-        register: (username, password, confirmPassword, first_name, last_name, email) => dispatch(register(username, password, confirmPassword, first_name, last_name, email))
+        register: (username, password, confirmPassword, first_name, last_name, email) => dispatch(register(username, password, confirmPassword, first_name, last_name, email)),
+        loadCoords: (userID, allusers) => dispatch(loadCoords(userID, allusers))
       }
     };
 };

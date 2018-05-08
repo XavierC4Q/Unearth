@@ -9,7 +9,7 @@ function logoutUser(req, res, next) {
 
 function getUser(req, res, next) {
   db.any(
-      `SELECT user_id, username, email, first_name, last_name, user_image
+      `SELECT user_id, username, email, first_name, last_name, user_image, search_distance
           FROM users
           WHERE user_id=$1`,
       [req.user.user_id]
@@ -24,9 +24,9 @@ function getUser(req, res, next) {
 
 function getSingleUser(req, res, next) {
   db.any(
-    `SELECT user_id, username, email, first_name, last_name, user_image
-        FROM users
-        WHERE user_id=${req.params.userID}`
+    `SELECT users.user_id, username, email, first_name, last_name, user_image, search_distance, latitude, longitude, location_name
+        FROM users JOIN userlocation ON (users.user_id = userlocation.user_id)
+        WHERE users.user_id=${req.params.userID}`
   )
   .then(data => {
     res.json(data)
@@ -38,8 +38,8 @@ function getSingleUser(req, res, next) {
 
 function getAllUsers(req, res, next) {
   db.any(
-      `SELECT user_id, username, email, first_name, last_name, user_image
-          FROM users;`
+      `SELECT users.user_id, first_name, last_name, username, latitude, longitude, location_name, user_image
+        FROM users JOIN userlocation ON (users.user_id = userlocation.user_id)`
     )
     .then(data => {
       res.json(data);
@@ -49,9 +49,24 @@ function getAllUsers(req, res, next) {
     });
 }
 
+function getUserLocation(req, res, next) {
+  db.any(
+    `SELECT users.user_id, username, location_name, latitude, longitude, search_distance
+    FROM users JOIN userlocation ON (users.user_id = userlocation.user_id)
+    WHERE users.user_id = ${req.params.userID}`
+  )
+  .then(data => {
+    res.json(data)
+  })
+  .catch(error => {
+    res.json(error)
+  })
+}
+
 module.exports = {
   logoutUser,
   getUser,
   getSingleUser,
-  getAllUsers
+  getAllUsers,
+  getUserLocation
 }

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { loginSuccess, loginFail } from './login'
 
 export function registerUsername(username){
   return {
@@ -64,6 +65,16 @@ export function register(username, password, first_name, last_name, email){
         last_name: last_name,
         email: email
       })
+      .then(
+        axios.post('/post/login', {
+          username: username,
+          password: password
+        })
+        .catch(error => {
+          dispatch(loginFail())
+        })
+      )
+      dispatch(loginSuccess())
       dispatch(registerSuccess())
     }
     catch(error){

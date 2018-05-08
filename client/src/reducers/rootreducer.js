@@ -2,19 +2,19 @@ import { failGetUser, failAllUsers, loadingAllUsers, loadingUser, loadedUser, lo
 import loginState from './loginreducer'
 import registerState from './registerreducer'
 import  getProfileUser  from './profilereducer'
+import { getUserCoords, getNearbyUsers } from './locationreducer'
 import { combineReducers } from "redux";
 
 export default combineReducers({
-/*All User and Single User Request*/
   failGetUser,
   failAllUsers,
   loadedUser,
   loadedAllUsers,
   loadingUser,
   loadingAllUsers,
-/*User Auth Request and Functions*/
   loginState,
   registerState,
-/*User Profile Request and Functions*/
-  getProfileUser
+  getProfileUser,
+  getUserCoords,
+  getNearbyUsers
 });
