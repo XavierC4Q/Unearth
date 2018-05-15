@@ -4,7 +4,8 @@ const defaultState = {
   confirmPassword: '',
   email: '',
   first_name: '',
-  last_name: ''
+  last_name: '',
+  location: { lat: undefined, lng: undefined, distance: 5 }
 }
 
 export default (state = defaultState, action) => {
@@ -33,6 +34,15 @@ export default (state = defaultState, action) => {
 
     case "REGISTER_LAST_NAME":
       newState.last_name = action.last_name
+      return newState
+
+    case "REGISTER_COORDS":
+      newState.location.lat = action.latitude
+      newState.location.lng = action.longitude
+      return newState
+
+    case "REGISTER_SEARCH_DISTANCE":
+      newState.location.distance = action.distance
       return newState
 
     case "REGISTER_ERROR":

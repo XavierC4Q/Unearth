@@ -47,22 +47,45 @@ export function getNearbyUsers(boolean, allusers){
   }
 }
 
+export function currentCoords(coords){
+  return {
+    type: "GOT_COORDS",
+    latitude: coords.coords.latitude,
+    longitude: coords.coords.longitude
+  }
+}
+
+export function loadingCoords(){
+  return {
+    type: "LOADING_COORDS"
+  }
+}
+
+export function failCoords(){
+  return {
+    type: "FAIL_COORDS"
+  }
+}
 
 export function loadNearbyUsers(lat, lng, distance, allusers, id){
   return (dispatch) => {
+
     let nearbyUsers = []
     allusers.map((user) => {
+
       let userLat = Number(user.latitude)
       let userLng = Number(user.longitude)
       let howFar = findDistance(lat, lng, userLat, userLng)
+
       if(howFar <= distance && user.user_id !== id){
+        user.latitude = Number(user.latitude)
+        user.longitude = Number(user.longitude)
         nearbyUsers.push(user)
       }
     })
     dispatch(getNearbyUsers(true, nearbyUsers))
   }
 }
-
 
 export function loadCoords(userID, allusers){
   return (dispatch) => {
@@ -76,5 +99,19 @@ export function loadCoords(userID, allusers){
     .catch(error => {
       dispatch(getUserCoords(false))
     })
+  }
+}
+
+export function getCurrentCoords(){
+  return (dispatch) => {
+    dispatch(loadingCoords())
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      dispatch(currentCoords(position))
+    })
+
+    setTimeout(() => {
+      dispatch(failCoords())
+    }, 5000000000000)
   }
 }

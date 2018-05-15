@@ -1,10 +1,15 @@
 import React from 'react'
 
-const Register = ({ state, register, registerUsername, registerPassword, confirmPassword, registerEmail, registerFirstName, registerLastName}) => {
-
+const Register = ({
+  state, register, registerUsername,
+  registerPassword, confirmPassword, registerEmail,
+  registerFirstName, registerLastName, location,
+  registerSearchDistance
+  }) => {
+    let searchValues = [5,10,15,20,50,75,100]
   return (
     <div>
-      <form onSubmit={() => register(state.username, state.password, state.confirmPassword, state.email, state.first_name, state.last_name)}>
+      <form onSubmit={() => register(state.username, state.password, state.confirmPassword, state.email, state.first_name, state.last_name, state.location.distance)}>
         <h2>Sign Up for an account!</h2>
         <div>
           <label>
@@ -49,6 +54,18 @@ const Register = ({ state, register, registerUsername, registerPassword, confirm
               type='text'
               onChange={registerLastName}
               />
+          </label>
+        </div>
+        <div>
+          <label>
+            Set Search Distance{" "}
+            <select onChange={registerSearchDistance}>
+              {['',...searchValues].map(value => (
+                <option>
+                  {value}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
         <div>

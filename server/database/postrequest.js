@@ -43,7 +43,25 @@ function loginUser(req, res, next) {
   })(req, res, next);
 }
 
+function insertUserCoords(req, res, next) {
+  return db.none(
+    'INSERT INTO userlocation (user_id, latitude, longitude) VALUES(${user_id}, ${latitude}, ${longitude});',
+    {
+      user_id: req.body.user_id,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude
+    }
+  )
+  .then(data => {
+    res.json('success')
+  })
+  .catch(error => {
+    res.json(error)
+  })
+}
+
 module.exports = {
   registerUser,
-  loginUser
+  loginUser,
+  insertUserCoords
 }

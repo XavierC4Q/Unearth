@@ -38,8 +38,8 @@ function getSingleUser(req, res, next) {
 
 function getAllUsers(req, res, next) {
   db.any(
-      `SELECT users.user_id, first_name, last_name, username, latitude, longitude, location_name, user_image
-        FROM users JOIN userlocation ON (users.user_id = userlocation.user_id)`
+      `SELECT users.user_id, username, first_name, last_name, latitude, longitude, location_name, search_distance, user_image, email 
+      FROM users JOIN userlocation ON (users.user_id = userlocation.user_id)`
     )
     .then(data => {
       res.json(data);

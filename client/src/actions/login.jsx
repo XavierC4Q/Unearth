@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { loadUser } from './users'
 
 export function usernameInput(string){
   return {
@@ -26,11 +27,28 @@ export function loginFail(){
   }
 }
 
+export function logout(){
+  return {
+    type: "LOGOUT"
+  }
+}
+
+export function logoutUser(){
+  return (dispatch) => {
+    return axios.get('/get/logout')
+    .then(() => {
+      dispatch(logout())
+    })
+  }
+}
+
 export function login(username, password){
   return (dispatch) => {
     try{
       axios.post('/post/login', {username: username, password: password})
+      .then(() => {
         dispatch(loginSuccess())
+      })
     }
     catch(error){
       dispatch(loginFail())
