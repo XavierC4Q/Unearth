@@ -2,31 +2,48 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Link, Switch } from 'react-router-dom'
 import { Redirect } from 'react-router'
+import axios from 'axios'
 
-import { gotUser, gotUserFail, profileChange, userProfile, userProfileChange } from './../actions/profile'
-import { loadUser, loadAllUsers } from './../actions/users'
+import { gotUser, gotUserFail, profileUser, profileChange, loadUserProfile, loadUser, userProfile, userProfileChange } from './../actions/profile'
 
 import UserProfile from '../components/Profile/UserProfile'
 
 class Profile extends React.Component{
+  constructor(){
+    super()
+
+    this.state = {
+      loaded: false
+    }
+  }
+
+  getLoggedInUser = () => {
+    axios.get('/get/loggedInUser')
+    .then(res => {
+      this.props.dispatch.loadUser(res.data)
+    })
+    .catch(error => {
+      this.props.dispatch.gotUserFail()
+    })
+  }
 
   componentDidMount(){
-    this.props.dispatch.loadUser('/get/loggedInUser')
-    this.props.dispatch.loadAllUsers('/get/allusers')
+    this.getLoggedInUser()
+    this.setState({ loaded: true })
   }
+
+
 
   renderUserProfile = props => {
     const userID = props.match.params
-    return (
-      <UserProfile
-        userID={userID}
-        loadProfile={this.props.dispatch.userProfile}
-        changeProfile={this.props.dispatch.userProfileChange}
-        state={this.props.profile}
-        loggedIn={this.props.userState.isLoggedIn}
-        loggedInUser={this.props.userState.loggedInUser}
-        />
-    )
+      return (
+        <UserProfile
+          userID={userID}
+          loaded={this.state.loaded}
+          profileState={this.props.profile}
+          profileUser={this.props.dispatch.loadUserProfile}
+          />
+      )
   }
 
   render(){
@@ -42,18 +59,18 @@ class Profile extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
-    userState: { loggedInUser: state.loadedUser.user, isLoggedIn: state.loadedUser.success },
-    profile: state.getProfileUser
+    users: state.userState,
+    profile: state.profileState
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatch: {
-      loadUser: (url) => dispatch(loadUser(url)),
-      loadAllUsers: (url) => dispatch(loadAllUsers(url)),
-      userProfile: (url) => dispatch(userProfile(url)),
-      userProfileChange: () => dispatch(userProfileChange())
+      loadUser: (user) => dispatch(loadUser(user)),
+      profileUser: (profileUser) => dispatch(profileUser(profileUser)),
+      loadUserProfile: (url) => dispatch(loadUserProfile(url)),
+      gotUserFail: () => dispatch(gotUserFail())
     }
   }
 }

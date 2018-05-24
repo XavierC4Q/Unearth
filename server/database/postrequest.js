@@ -6,6 +6,7 @@ function registerUser(req, res, next) {
   return authHelpers
     .createUser(req)
     .then(response => {
+      console.log('this is the register', req.body)
       passport.authenticate("local", (err, user, info) => {
         if (user) {
           res.status(200).json({

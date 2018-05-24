@@ -24,9 +24,8 @@ function getUser(req, res, next) {
 
 function getSingleUser(req, res, next) {
   db.any(
-    `SELECT users.user_id, username, email, first_name, last_name, user_image, search_distance, latitude, longitude, location_name
-        FROM users JOIN userlocation ON (users.user_id = userlocation.user_id)
-        WHERE users.user_id=${req.params.userID}`
+    `SELECT user_id, username, email, first_name, last_name, user_image, search_distance, latitude, longitude
+      FROM users WHERE user_id=${req.params.userID}`
   )
   .then(data => {
     res.json(data)
@@ -38,8 +37,7 @@ function getSingleUser(req, res, next) {
 
 function getAllUsers(req, res, next) {
   db.any(
-      `SELECT users.user_id, username, first_name, last_name, latitude, longitude, location_name, search_distance, user_image, email 
-      FROM users JOIN userlocation ON (users.user_id = userlocation.user_id)`
+      `SELECT * FROM users`
     )
     .then(data => {
       res.json(data);
@@ -51,8 +49,8 @@ function getAllUsers(req, res, next) {
 
 function getUserLocation(req, res, next) {
   db.any(
-    `SELECT users.user_id, username, location_name, latitude, longitude, search_distance
-    FROM users JOIN userlocation ON (users.user_id = userlocation.user_id)
+    `SELECT users.user_id, username, latitude, longitude, search_distance
+    FROM users
     WHERE users.user_id = ${req.params.userID}`
   )
   .then(data => {

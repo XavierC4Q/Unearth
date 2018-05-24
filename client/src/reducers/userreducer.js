@@ -1,56 +1,30 @@
-export function failGetUser(state = false, action){
-  switch (action.type){
-    case "FAIL_GET_USER":
-      return action.failure
-    default:
-      return state
-  }
-}
+export default (state = { user: [], loggedIn: false, allUsers: [], error: false }, action) => {
 
-export function loadingUser(state = false, action){
-  switch (action.type){
-    case "LOADING_USER":
-      return action.loadingUser
-    default:
-      return state
-  }
-}
-
-export function loadedUser(state = { user: [], success: false }, action){
   let newState = state
-  switch (action.type){
-    case "LOADED_USER":
-      newState.user = action.user
-      newState.success = true
-      return newState
-    default:
-      return state
-  }
-}
 
-export function failAllUsers(state = false, action){
-  switch (action.type){
-    case "FAIL_ALL_USERS":
-      return action.failureAllUsers
-    default:
-      return state
-  }
-}
+    switch(action.type){
+      case "LOGIN":
+        newState.user = action.user
+        return newState
 
-export function loadingAllUsers(state = false, action){
-  switch (action.type){
-    case "LOADING_ALL_USERS":
-      return action.loadingAllUsers
-    default:
-      return state
-  }
-}
+      case "LOGIN_SUCCESS":
+        newState.loggedIn = true
+        return newState
+              
+      case "LOGOUT":
+        newState.user = []
+        newState.loggedIn = false
+        return newState
 
-export function loadedAllUsers(state = [], action){
-  switch (action.type){
-    case "LOADED_ALL_USERS":
-      return action.allusers
-    default:
-      return state
-  }
+      case "ALLUSERS":
+        newState.allUsers = action.allUsers
+        return newState
+
+      case "USER_ERROR":
+        newState.error = true
+        return newState
+
+      default:
+        return state
+    }
 }

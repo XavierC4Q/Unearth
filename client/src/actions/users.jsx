@@ -1,77 +1,72 @@
 import axios from 'axios'
 
-/*------------------------------------------Single User Actions------------------------------------------*/
-export function failGetUser(boolean){
+export function login(user){
   return {
-    type: "FAIL_GET_USER",
-    failure: boolean
-  }
-}
-
-export function loadingUser(boolean){
-  return {
-    type: "LOADING_USER",
-    loadingUser: boolean
-  }
-}
-
-export function userLoaded(user){
-  return {
-    type: "LOADED_USER",
+    type: "LOGIN",
     user
   }
 }
 
-
-/*------------------------------------------All User Actions------------------------------------------*/
-export function failAllUsers(boolean){
+export function loginSuccess(){
   return {
-    type: "FAIL_ALL_USERS",
-    failureAllUsers: boolean
+    type: "LOGIN_SUCCESS"
   }
 }
 
-export function loadingAllUsers(boolean){
+export function logout(){
   return {
-    type: "LOADING_ALL_USERS",
-    loadingAllUsers: boolean
+    type: "LOGOUT"
   }
 }
 
-export function allUsersLoaded(allusers){
+export function allUsers(allUsers){
   return {
-    type: "LOADED_ALL_USERS",
-    allusers
+    type: "ALLUSERS",
+    allUsers
   }
 }
 
-/*--------------------------------------------------AXIOS Request-----------------------------------------------------*/
-export function loadUser(url){
+export function userError(){
+  return {
+    type: "USER_ERROR"
+  }
+}
+
+export function getAllUsers(allUsers){
+  return {
+    type: "ALLUSERS",
+    allUsers
+  }
+}
+
+export function loginUser(username, password){
   return (dispatch) => {
-    dispatch(loadingUser(true))
-
-    return axios.get(url).then(res => {
-      dispatch(userLoaded(res.data))
-      dispatch(loadingUser(false))
-      dispatch(failGetUser(false))
-    })
-    .catch(error => {
-      dispatch(failGetUser(true))
-    })
+    try{
+      axios.post('/post/login', { username: username, password: password })
+    }
+    catch(error){
+      dispatch(userError())
+    }
   }
 }
 
-export function loadAllUsers(url){
+export function logoutUser(){
   return (dispatch) => {
-    dispatch(loadingAllUsers(true))
+    try{
+      axios.get('/get/logout')
+      .then(() => { dispatch(logout()) })
+    }
+    catch(error){
+      dispatch(userError())
+    }
+  }
+}
 
-    return axios.get(url).then(res => {
-      dispatch(allUsersLoaded(res.data))
-      dispatch(loadingAllUsers(false))
-      dispatch(failAllUsers(false))
-    })
-    .catch(error => {
-      dispatch(failAllUsers(true))
+export function loadAllUsers(){
+  return (dispatch) => {
+    return axios.get('/get/allusers')
+    .then(res => {
+      dispatch(getAllUsers(res.data))
     })
   }
 }

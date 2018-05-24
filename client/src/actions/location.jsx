@@ -47,14 +47,6 @@ export function getNearbyUsers(boolean, allusers){
   }
 }
 
-export function currentCoords(coords){
-  return {
-    type: "GOT_COORDS",
-    latitude: coords.coords.latitude,
-    longitude: coords.coords.longitude
-  }
-}
-
 export function loadingCoords(){
   return {
     type: "LOADING_COORDS"
@@ -84,34 +76,5 @@ export function loadNearbyUsers(lat, lng, distance, allusers, id){
       }
     })
     dispatch(getNearbyUsers(true, nearbyUsers))
-  }
-}
-
-export function loadCoords(userID, allusers){
-  return (dispatch) => {
-
-    return axios.get(`/get/userlocation/${userID}`)
-    .then(res => {
-      let data = res.data[0]
-      dispatch(getUserCoords(true, Number(data.latitude), Number(data.longitude), data.location_name, data.search_distance))
-      dispatch(loadNearbyUsers(Number(data.latitude), Number(data.longitude), data.search_distance, allusers, userID))
-    })
-    .catch(error => {
-      dispatch(getUserCoords(false))
-    })
-  }
-}
-
-export function getCurrentCoords(){
-  return (dispatch) => {
-    dispatch(loadingCoords())
-
-    navigator.geolocation.getCurrentPosition((position) => {
-      dispatch(currentCoords(position))
-    })
-
-    setTimeout(() => {
-      dispatch(failCoords())
-    }, 5000000000000)
   }
 }

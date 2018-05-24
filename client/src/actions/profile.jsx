@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-export function gotUser(user){
+export function gotUser(loggedInUser){
   return {
     type: "GOT_USER",
-    user
+    loggedInUser
   }
 }
 
@@ -19,15 +19,29 @@ export function profileChange(){
   }
 }
 
-export function userProfile(url){
-  return (dispatch) => {
+export function profileUser(profileUser){
+  return {
+    type: "PROFILE_USER",
+    profileUser
+  }
+}
 
-    return axios.get(url).then(res => {
-      dispatch(gotUser(res.data))
-    })
-    .catch(error => {
-      dispatch(gotUserFail())
-    })
+export function loadUser(user){
+  return (dispatch) => {
+    dispatch(gotUser(user))
+  }
+}
+
+export function loadUserProfile(url){
+  return (dispatch) => {
+    try{
+      axios.get(url).then(res => {
+        dispatch(profileUser(res.data))
+      })
+    }
+    catch(error){
+      console.log('world')
+    }
   }
 }
 

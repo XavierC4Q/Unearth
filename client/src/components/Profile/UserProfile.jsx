@@ -4,26 +4,42 @@ import { Route, Link, Switch } from 'react-router-dom'
 import { Redirect } from 'react-router'
 
 class UserProfile extends React.Component{
+  constructor(props){
+    super(props)
 
-  componentDidMount(){
-    this.props.loadProfile(`/get/singleuser/${this.props.userID.userID}`)
+    this.state = {
+      loaded: false
+    }
+  }
+
+  singleUser = () => {
+    let theId = this.props.userID.userID
+    let url = `/get/singleuser/${theId}`
+    this.props.profileUser(url)
+  }
+
+  componentDidUpdate(prevProps){
+    if(!prevProps.loaded){
+      this.singleUser()
+      this.setState({ loaded: true })
+    }
   }
 
   render(){
-    let isOwnProfile = false
+    if(this.props.loaded){
+      if(this.state.loaded){
+        if(this.props.loaded && this.state.loaded){
+          console.log(this.props.profileState)
+          return(
+            <div>
+              <h1>Profile</h1>
 
-    if(this.props.state[0]){
-      if(this.props.loggedInUser[0]){
-        isOwnProfile = this.props.loggedInUser[0].user_id === Number(this.props.userID.userID)
+            </div>
+          )
+        }
       }
-      return (
-        <div>
-          <h1>The Profile Of {this.props.state[0].username}</h1>
-          {isOwnProfile ? '' : <button>Subscribe</button>}
-        </div>
-      )
     }
-    return (<div>loading profile</div>)
+    return (<div>the profile else</div>)
   }
 }
 
