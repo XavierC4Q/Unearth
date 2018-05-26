@@ -13,12 +13,6 @@ export function gotUserFail(){
   }
 }
 
-export function profileChange(){
-  return {
-    type: "PROFILE_CHANGE"
-  }
-}
-
 export function profileUser(profileUser){
   return {
     type: "PROFILE_USER",
@@ -42,11 +36,5 @@ export function loadUserProfile(url){
     catch(error){
       console.log('world')
     }
-  }
-}
-
-export function userProfileChange(){
-  return (dispatch) => {
-    dispatch(profileChange())
   }
 }

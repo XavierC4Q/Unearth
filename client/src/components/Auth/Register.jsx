@@ -71,7 +71,7 @@ class Register extends React.Component {
 
   render(){
     let searchValues = [5,10,15,20,25,50,100]
-    const { username, password, confirmPass, first_name, last_name, search_distance, email, message } = this.state
+    const { username, password, confirmPass, first_name, last_name, search_distance, user_image, email, message } = this.state
     if(this.props.loggedIn){
       return (<Redirect to='/' />)
     }
@@ -147,6 +147,17 @@ class Register extends React.Component {
           </div>
           <div>
             <label>
+              Profile Photo{" "}
+              <input
+                type='text'
+                value={user_image}
+                name='user_image'
+                onInput={this.handleInput}
+                />
+            </label>
+          </div>
+          <div>
+            <label>
               Search Distance{" "}
               <select onChange={this.handleSelect}>
                 {['',...searchValues].map(value => (
@@ -156,7 +167,9 @@ class Register extends React.Component {
             </label>
           </div>
           <button type='submit'>Register</button>
-          {message}
+          <div>
+            {message}
+          </div>
         </form>
       </div>
     )

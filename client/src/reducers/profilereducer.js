@@ -1,22 +1,14 @@
-export default (state = { loggedInUser: [], profileUser: [], fail: false }, action) => {
+export default (state = { loggedInUser: {}, profileUser: {}, fail: false }, action) => {
   let newState = state
   switch(action.type){
     case "GOT_USER":
-      newState.loggedInUser = action.loggedInUser
-      return newState
+      return Object.assign({}, newState, {loggedInUser: action.loggedInUser})
 
     case "PROFILE_USER":
-      newState.profileUser = action.profileUser
-      return newState
+    return Object.assign({}, newState, {profileUser: action.profileUser})
 
     case "ERROR_GET_USER":
-      newState.fail = true
-      return newState
-
-    case "PROFILE_CHANGE":
-      newState.user = []
-      newState.fail = false
-      return newState
+    return Object.assign({}, newState, {fail: true})
 
     default:
       return state

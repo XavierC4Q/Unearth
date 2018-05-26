@@ -6,13 +6,14 @@ import axios from 'axios'
 
 import { login, loginSuccess, loginUser, logoutUser, loadAllUsers } from '../actions/users'
 import { registerUser, register, errorRegister } from '../actions/register'
+import { loadNearbyUsers } from '../actions/location'
 
 import LandingPage from '../components/LandingPage/LandingPage'
 import Login from '../components/Auth/Login'
 import Register from '../components/Auth/Register'
 
 
-class Home extends React.Component{
+class HomeContainer extends React.Component{
   constructor(){
     super()
 
@@ -43,17 +44,9 @@ class Home extends React.Component{
     this.props.dispatch.loadAllUsers()
   }
 
-  componentDidUpdate(prevProps){
-
-  }
-
-  componentWillReceiveProps(nextProps){
-
-  }
-
 
   renderLogin = () => {
-    if(this.state.loggedIn){
+    if(this.props.users.loggedIn){
       return (<Redirect to='/' />)
     }
     return(
@@ -84,7 +77,7 @@ class Home extends React.Component{
         <Switch>
           <Route exact path='/login' render={this.renderLogin}/>
           <Route exact path='/register' render={this.renderRegister} />
-          <Route exact path='/' render={(() => { return <LandingPage users={this.props.users} loggedIn={this.state.loggedIn} logout={this.props.dispatch.logoutUser}/> })} />
+          <Route exact path='/' render={(() => { return <LandingPage users={this.props.users} loggedIn={this.props.users.loggedIn} logout={this.props.dispatch.logoutUser}/> })} />
         </Switch>
       </div>
     )
@@ -114,4 +107,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer)

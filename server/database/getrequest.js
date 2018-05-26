@@ -9,7 +9,7 @@ function logoutUser(req, res, next) {
 
 function getUser(req, res, next) {
   db.any(
-      `SELECT user_id, username, email, first_name, last_name, user_image, search_distance
+      `SELECT user_id, username, email, first_name, last_name, user_image, search_distance, latitude, longitude
           FROM users
           WHERE user_id=$1`,
       [req.user.user_id]

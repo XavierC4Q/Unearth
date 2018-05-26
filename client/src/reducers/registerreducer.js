@@ -8,15 +8,10 @@ export default (state = defaultState, action) => {
 
   switch(action.type){
     case "REGISTER_ERROR":
-      newState.error = true
-      newState.success = false
-      return newState
+      return Object.assign({}, newState, {succes: false,error: true})
 
     case "REGISTER_SUCCESS":
-      newState.success = true
-      newState.error =  false
-      return newState
-
+      return Object.assign({}, newState, {succes: true,error: false})
     default:
       return state
   }

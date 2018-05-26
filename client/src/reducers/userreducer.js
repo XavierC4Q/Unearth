@@ -4,25 +4,19 @@ export default (state = { user: [], loggedIn: false, allUsers: [], error: false 
 
     switch(action.type){
       case "LOGIN":
-        newState.user = action.user
-        return newState
+        return Object.assign({}, newState, {user: action.user})
 
       case "LOGIN_SUCCESS":
-        newState.loggedIn = true
-        return newState
-              
+        return Object.assign({}, newState, {loggedIn: true})
+
       case "LOGOUT":
-        newState.user = []
-        newState.loggedIn = false
-        return newState
+        return Object.assign({}, newState, {user: [], loggedIn: false})
 
       case "ALLUSERS":
-        newState.allUsers = action.allUsers
-        return newState
+      return Object.assign({}, newState, {allUsers: action.allUsers})
 
       case "USER_ERROR":
-        newState.error = true
-        return newState
+        return Object.assign({}, newState, {error: true})
 
       default:
         return state

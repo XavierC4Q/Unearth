@@ -13,17 +13,31 @@ class LandingPage extends React.Component {
 
 
   render(){
-    return(
-      <div>
-        <nav>
-          {this.props.loggedIn ? '' : <Link to='/login'>Login</Link>}
-          {" "}
-          {this.props.loggedIn ? '' : <Link to='/register'>Register</Link>}
-        </nav>
-        <h1>Welcome to Unearth</h1>
-        {this.props.loggedIn ? <button onClick={() => { this.props.logout() }}>Logout</button> : ''}
-      </div>
-    )
+    if(this.props.users.user[0]){
+      let profileUrl = `/unearth/profile/${this.props.users.user[0].user_id}`
+      return(
+        <div>
+          <nav>
+            <Link to={profileUrl}>Profile</Link>
+            {" "}
+            <Link to='/unearth/feed'>Feed</Link>
+          </nav>
+          <h1>Welcome to Unearth</h1>
+          <button onClick={() => { this.props.logout() }}>Logout</button>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <nav>
+            <Link to='/login'>Login</Link>
+            {" "}
+            <Link to='/register'>Register</Link>
+          </nav>
+          <h1>Welcome to Unearth</h1>
+        </div>
+      )
+    }
   }
 }
 

@@ -24,8 +24,8 @@ export function registerUser(username, password, email, first_name, last_name, u
         last_name: last_name,
         user_image: 'photo',
         search_distance: search_distance ? Number(search_distance) : 5,
-        latitude: Number(latitude),
-        longitude: Number(longitude)
+        latitude: latitude ? Number(latitude) : 40.7128,
+        longitude: longitude ? Number(longitude) : -74.0060
       })
       .then(res => {
         axios.post('/post/login', { username: username, password: password })

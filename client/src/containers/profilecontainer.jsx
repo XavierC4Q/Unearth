@@ -8,7 +8,7 @@ import { gotUser, gotUserFail, profileUser, profileChange, loadUserProfile, load
 
 import UserProfile from '../components/Profile/UserProfile'
 
-class Profile extends React.Component{
+class ProfileContainer extends React.Component{
   constructor(){
     super()
 
@@ -36,12 +36,13 @@ class Profile extends React.Component{
 
   renderUserProfile = props => {
     const userID = props.match.params
+    if(!this.props.users.loggedIn){
+      return (<Redirect to='/' />)
+    }
       return (
         <UserProfile
           userID={userID}
           loaded={this.state.loaded}
-          profileState={this.props.profile}
-          profileUser={this.props.dispatch.loadUserProfile}
           />
       )
   }
@@ -75,4 +76,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer)

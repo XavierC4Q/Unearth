@@ -20,42 +20,10 @@ function findDistance(lat1, lon1, lat2, lon2, unit){
     //Credits to https://www.geodatasource.com
 }
 
-export function getUserCoords(boolean, latitude, longitude, location_name, distance){
-  if(boolean){
-    return {
-      type: "GET_USER_COORDS",
-      latitude,
-      longitude,
-      location_name,
-      distance
-    }
-  }
+export function getNearbyUsers(nearbyUsers){
   return {
-    type: "FAIL_GET_USER_COORDS"
-  }
-}
-
-export function getNearbyUsers(boolean, allusers){
-  if(boolean){
-    return {
-      type: "GET_NEARBY_USERS",
-      allusers
-    }
-  }
-  return {
-    type: "FAIL_GET_NEARBY_USERS"
-  }
-}
-
-export function loadingCoords(){
-  return {
-    type: "LOADING_COORDS"
-  }
-}
-
-export function failCoords(){
-  return {
-    type: "FAIL_COORDS"
+    type: "GET_NEARBY_USERS",
+    nearbyUsers
   }
 }
 
@@ -75,6 +43,6 @@ export function loadNearbyUsers(lat, lng, distance, allusers, id){
         nearbyUsers.push(user)
       }
     })
-    dispatch(getNearbyUsers(true, nearbyUsers))
+    dispatch(getNearbyUsers(nearbyUsers))
   }
 }
