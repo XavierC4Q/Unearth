@@ -7,6 +7,7 @@ import axios from 'axios'
 import { gotUser, gotUserFail, profileUser, profileChange, loadUserProfile, loadUser, userProfile, userProfileChange } from './../actions/profile'
 
 import UserProfile from '../components/Profile/UserProfile'
+import UserEdit from '../components/Profile/UserEdit'
 
 class ProfileContainer extends React.Component{
   constructor(){
@@ -47,10 +48,20 @@ class ProfileContainer extends React.Component{
       )
   }
 
+  renderUserEdit = () => {
+    if(!this.props.users.loggedIn){
+      return (<Redirect to='/' />)
+    }
+    return (
+      <UserEdit />
+    )
+  }
+
   render(){
     return(
       <div>
         <Switch>
+          <Route exact path='/unearth/edit' render={this.renderUserEdit} />
           <Route exact path='/unearth/profile/:userID' render={this.renderUserProfile} />
         </Switch>
       </div>
@@ -70,7 +81,7 @@ const mapDispatchToProps = (dispatch) => {
     dispatch: {
       loadUser: (user) => dispatch(loadUser(user)),
       profileUser: (profileUser) => dispatch(profileUser(profileUser)),
-      loadUserProfile: (url) => dispatch(loadUserProfile(url)),
+      loadUserProfile: (user, info) => dispatch(loadUserProfile(user, info)),
       gotUserFail: () => dispatch(gotUserFail())
     }
   }

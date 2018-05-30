@@ -61,10 +61,26 @@ function getUserLocation(req, res, next) {
   })
 }
 
+function getProfileInfo(req, res, next) {
+  db.any(
+    `SELECT username, user_image, email, first_name, last_name, search_distance, users.user_id, facebook, twitter, linkedIn, instagram, youtube, vimeo, soundcloud, bio
+    FROM users
+    JOIN profile ON(profile.user_id = users.user_id)
+    WHERE users.user_id = ${req.params.userID}`
+  )
+  .then(data => {
+    res.json(data)
+  })
+  .catch(error => {
+    res.json(error)
+  })
+}
+
 module.exports = {
   logoutUser,
   getUser,
   getSingleUser,
   getAllUsers,
-  getUserLocation
+  getUserLocation,
+  getProfileInfo
 }

@@ -44,8 +44,8 @@ class Feed extends React.Component{
         <div>
           <h1>User Feed</h1>
           <h3>Who is Nearby?</h3>
-          {this.props.location.map(users => (
-            
+          {this.props.location.users.map(users => (
+            <p>{users.username}</p>
           ))}
         </div>
       )

@@ -15,6 +15,7 @@ class App extends Component {
           <Route exact path='/login' component={HomeContainer} />
           <Route exact path='/register' component={HomeContainer} />
           <Route exact path='/' component={HomeContainer} />
+          <Route exact path='/unearth/edit' component={ProfileContainer} />
           <Route exact path='/unearth/profile/:userID' component={ProfileContainer} />
           <Route exact path='/unearth/feed' component={FeedContainer} />
         </Switch>

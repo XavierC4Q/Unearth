@@ -20,9 +20,10 @@ CREATE TABLE subscription (
   user_id INTEGER REFERENCES users,
   subscribed_to INTEGER REFERENCES users);
 
-CREATE TABLE media (
-  media_id SERIAL PRIMARY KEY,
+CREATE TABLE profile (
+  profile_id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users,
+  bio VARCHAR,
   facebook VARCHAR,
   twitter VARCHAR,
   soundcloud VARCHAR,
@@ -44,3 +45,5 @@ INSERT INTO users (username, password, email, first_name, last_name, user_image,
   10, 40.86999, -73.8453), ('Reed', '$2a$10$C10mTqxF6zBf2CnQE3oxfOP/8PpF25LyN1v7lRp4KjLYIBLczWGvm', 'gmail', 'Joey', 'Gains', 'https://cdn.shopify.com/s/files/1/0896/0640/products/oboe-reed-winfield-standard-oboe-reed-1_400x400.jpeg?v=1487682604', 5, 40.7888000, -73.7800000),
   ('Matthew', '$2a$10$C10mTqxF6zBf2CnQE3oxfOP/8PpF25LyN1v7lRp4KjLYIBLczWGvm', 'gmail', 'Matt', 'Munroe', 'https://www.foodnetwork.com/recipes/ree-drummond/chili-beans-2632850', 15, 34.0522, -118.2437),
   ('Elon', '$2a$10$C10mTqxF6zBf2CnQE3oxfOP/8PpF25LyN1v7lRp4KjLYIBLczWGvm', 'mail', 'Edge', 'Jeff', 'https://4vector.com/i/free-vector-e-train-clip-art_109308_E_Train_clip_art_hight.png', 15, 34.0578, -118.4437);
+INSERT INTO profile (user_id, bio, facebook, twitter, soundcloud, youtube, vimeo, instagram, linkedIn)
+  VALUES (1, 'Faithful black man.umble legend.', 'facebook.com', 'twitter.com', 'soundcloud.com', 'youtube.com', 'vimeo.com', 'instagram.com', 'linkedIn.com')

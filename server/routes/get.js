@@ -7,6 +7,7 @@ router.get('/loggedInUser', loginRequired, db.getUser)
 router.get('/singleuser/:userID', loginRequired, db.getSingleUser)
 router.get('/allusers', db.getAllUsers)
 router.get('/userlocation/:userID', db.getUserLocation)
+router.get('/profileInfo/:userID', loginRequired, db.getProfileInfo)
 router.get('/logout', loginRequired, db.logoutUser)
 
 module.exports = router;
