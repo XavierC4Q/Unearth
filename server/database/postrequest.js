@@ -44,6 +44,21 @@ function loginUser(req, res, next) {
   })(req, res, next);
 }
 
+function insertNewProfile(req, res, next) {
+  return db.none(
+    'INSERT INTO profile (user_id) VALUES(${user_id});',
+    {
+      user_id: req.body.user_id
+    }
+  )
+  .then(data => {
+    res.json('success')
+  })
+  .catch(error => {
+    res.json(error)
+  })
+}
+
 function insertUserCoords(req, res, next) {
   return db.none(
     'INSERT INTO userlocation (user_id, latitude, longitude) VALUES(${user_id}, ${latitude}, ${longitude});',
@@ -64,5 +79,6 @@ function insertUserCoords(req, res, next) {
 module.exports = {
   registerUser,
   loginUser,
-  insertUserCoords
+  insertUserCoords,
+  insertNewProfile
 }

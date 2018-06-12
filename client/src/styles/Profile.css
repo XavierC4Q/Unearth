@@ -1,0 +1,63 @@
+.topbar {
+  grid-area: topbar;
+  background-color: #111;
+  text-align: right
+}
+
+.topbar a {
+  color: goldenrod
+}
+
+.profileheader {
+  grid-area: profileheader;
+  text-align: center;
+  background-color: #111
+}
+
+.profilephoto {
+  grid-area: profilephoto;
+  margin: 0 auto;
+  border: 4px solid #111
+}
+
+.profilebio {
+  grid-area: profilebio;
+  text-align: center;
+  margin: 0 auto 20px;
+  width: 600px;
+  height: 200px;
+  padding: 35px;
+  font-size: 125%;
+}
+
+.userimage {
+  width: 250px;
+  height: 100%;
+  margin: 0 auto
+}
+
+.profilemedia {
+  grid-area: profilemedia;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 4px solid #111
+}
+
+.mediaimage {
+  height: 130px;
+  width: 150px
+}
+
+.profilecontainer {
+  display: grid;
+  grid-gap: 3px;
+  grid-template-columns: 100%;
+  grid-template-areas:
+  "topbar"
+  "profileheader"
+  "profilephoto"
+  "profilebio"
+  "profilemedia";
+  color: goldenrod
+}

@@ -56,6 +56,7 @@ export function loadUserProfile(user, info){
 }
 
 export function editUser(user){
+  console.log('the uset edited', user)
   return (dispatch) => {
     axios.patch(`/patch/editUser/${user.id}`, {
       username: user.username,
@@ -66,6 +67,7 @@ export function editUser(user){
       search_distance: user.search_distance
     })
     .then(() => {
+      console.log('made is to the profile')
       axios.patch(`/patch/editProfile/${user.id}`, {
         bio: user.bio,
         facebook: user.facebook,
